@@ -1,3 +1,5 @@
+SetCurrentPermissionStatus("Permission status: Default. Ask for permission");
+
 function Notify() {
     if (!("Notification" in window)) {
         showWarningToast("This browser does not support desktop notification");
@@ -39,13 +41,11 @@ function askForPermission(successCB, failureCB) {
     else {
         Notification.requestPermission().then(function (permission) {
             if (permission === "granted") {
-                SetCurrentPermissionStatus("Permission Granted!");
                 showUserAcceptedToast();
                 if (successCB) {
                     successCB();
                 }
             } else if (permission === "denied") {
-                SetCurrentPermissionStatus("Permission Denied!");
                 showUserDeniedToast();
                 if (failureCB) {
                     failureCB();
@@ -62,10 +62,12 @@ function SetCurrentPermissionStatus(msg) {
 }
 
 function showUserDeniedToast() {
+    SetCurrentPermissionStatus("Permission Denied!");
     showWarningToast('User has denied the permission for desktop notifications.');
 }
 
 function showUserAcceptedToast() {
+    SetCurrentPermissionStatus("Permission Granted!");
     showSuccessToast('User has accepted the permission for desktop notifications.');
 }
 
