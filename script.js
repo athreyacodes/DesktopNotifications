@@ -89,12 +89,12 @@ function showUserAcceptedToast() {
 }
 
 function showWarningToast(msg) {
-    document.getElementById('warningMsg').text = msg;
+    document.getElementById('warningMsg').innerHTML = msg;
     showToast('warningToast');
 }
 
 function showSuccessToast(msg) {
-    document.getElementById('successMsg').text = msg;
+    document.getElementById('successMsg').innerHTML = msg;
     showToast('successToast');
 }
 
