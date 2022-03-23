@@ -14,7 +14,12 @@ function Notify() {
 }
 
 function RenderDesktopNotificationPopup() {
-    var notification = new Notification("Hi there!");
+    var notification = new Notification("Title", {
+        body:'HTML5 Web Notification API',
+        // icon:'http://i.stack.imgur.com/Jzjhz.png?s=48&g=1', 
+        icon:'enate-logo.png', 
+        dir:'auto'
+    });
 }
 
 function askForPermission(successCB, failureCB) {
