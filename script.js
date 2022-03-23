@@ -3,23 +3,33 @@ function Notify() {
         showWarningToast("This browser does not support desktop notification");
     }
     else if (Notification.permission === "granted") {
-        RenderDesktopNotificationPopup();
+        NotifyDesktop();
     }
     else if (Notification.permission !== "denied") {
-        askForPermission(RenderDesktopNotificationPopup);
+        askForPermission(NotifyDesktop);
     }
     else if (Notification.permission === "denied") {
         showUserDeniedToast();
     }
 }
 
+const NotifyDesktop = debounce(() => RenderDesktopNotificationPopup());
+
 function RenderDesktopNotificationPopup() {
-    var notification = new Notification("Title", {
-        body:'HTML5 Web Notification API',
-        // icon:'http://i.stack.imgur.com/Jzjhz.png?s=48&g=1', 
-        icon:'enate-logo.png', 
-        dir:'auto'
+    var id = Math.floor(Math.random() * 101);
+    var notification = new Notification("A workitem has been assigned to you", {
+        body: 'Workitem: '+ id +' has been assigned to by your lead',
+        icon: 'enate-logo.png',
+        data: id,
+        dir: 'auto'
     });
+    notification.onclick = function (event) {
+        window.focus();
+        alert('On click of a notification, we can open a workitem "'+notification.data+'" if the window is open.');
+    }
+    setTimeout(function () {
+        notification.close();
+    }, 8000);
 }
 
 function askForPermission(successCB, failureCB) {
@@ -29,22 +39,26 @@ function askForPermission(successCB, failureCB) {
     else {
         Notification.requestPermission().then(function (permission) {
             if (permission === "granted") {
+                SetCurrentPermissionStatus("Permission Granted!");
                 showUserAcceptedToast();
                 if (successCB) {
                     successCB();
                 }
             } else if (permission === "denied") {
+                SetCurrentPermissionStatus("Permission Denied!");
                 showUserDeniedToast();
                 if (failureCB) {
                     failureCB();
                 }
+            } else if (permission === "default") {
+                SetCurrentPermissionStatus("Permission status: Default. Ask for permission");
             }
         });
     }
 }
 
-function GetCurrentPermissionStatus() {
-    
+function SetCurrentPermissionStatus(msg) {
+    document.getElementById('currentStatus').text(msg);
 }
 
 function showUserDeniedToast() {
@@ -71,3 +85,11 @@ function showToast(id) {
         new bootstrap.Toast(document.getElementById(id)).show();
     }
 }
+
+function debounce(func, timeout = 1000){
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+  }

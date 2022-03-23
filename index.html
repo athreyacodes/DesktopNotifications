@@ -6,26 +6,24 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">Notifications Playground</span>
+            <span class="navbar-brand mb-0 h1">Notifications Spike</span>
         </div>
     </nav>
 
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <div class="col">
-                <button type="button" class="btn btn-primary" onclick="Notify()">Show Desktop Notification</button>
-            </div>
+    <main class="container mt-5 pt-2">
+        <div class="bg-light p-5 rounded">
+            <h1>Desktop Notifications</h1>
+            <p class="lead">Asks for permission. If permission is granted/denied, it can be only changed again in
+                browser settings. we can not revoke from Code.</p>
+            <button type="button" class="btn btn-primary" onclick="Notify()">Show Desktop Notification</button>
+            <small id="currentStatus"></small>
         </div>
-        <div class="row mt-4">
-            <div class="col">
-                <button type="button" class="btn btn-light" onclick="askForPermission(RenderDesktopNotificationPopup)">Ask for permission</button>
-            </div>
-        </div>
-    </div>
+    </main>
 
-    <div id="warningToast" class="toast align-items-center text-white bg-danger border-0 position-absolute bottom-0 end-0 m-5" role="alert"
+    <div id="warningToast"
+        class="toast align-items-center text-white bg-danger border-0 position-absolute bottom-0 end-0 m-5" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body" id="warningMsg">
@@ -36,8 +34,9 @@
         </div>
     </div>
 
-    <div id="successToast" class="toast align-items-center text-white bg-success border-0 position-absolute bottom-0 end-0 m-5" role="alert"
-        aria-live="assertive" aria-atomic="true">
+    <div id="successToast"
+        class="toast align-items-center text-white bg-success border-0 position-absolute bottom-0 end-0 m-5"
+        role="alert" aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body" id="successMsg">
                 User has accepted the permission for desktop notifications.
