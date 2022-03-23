@@ -5,12 +5,14 @@ function Notify() {
         showWarningToast("This browser does not support desktop notification");
     }
     else if (Notification.permission === "granted") {
+        SetCurrentPermissionStatus("Permission Granted!");
         NotifyDesktop();
     }
     else if (Notification.permission !== "denied") {
         askForPermission(NotifyDesktop);
     }
     else if (Notification.permission === "denied") {
+        SetCurrentPermissionStatus("Permission Denied!");
         showUserDeniedToast();
     }
 }
