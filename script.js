@@ -58,7 +58,7 @@ function askForPermission(successCB, failureCB) {
 }
 
 function SetCurrentPermissionStatus(msg) {
-    document.getElementById('currentStatus').text = msg;
+    document.getElementById('currentStatus').innerHTML = msg;
 }
 
 function showUserDeniedToast() {
