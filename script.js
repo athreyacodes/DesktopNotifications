@@ -1,5 +1,5 @@
 SetCurrentPermissionStatus("Permission status: Default. Ask for permission");
-
+askForPermission();
 
 const Notify = debounce(() => DebounceNotify());
 const NotifyDesktop = debounce(() => DebounceNotifyDesktop());
