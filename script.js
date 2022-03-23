@@ -43,6 +43,10 @@ function askForPermission(successCB, failureCB) {
     }
 }
 
+function GetCurrentPermissionStatus() {
+    
+}
+
 function showUserDeniedToast() {
     showWarningToast('User has denied the permission for desktop notifications.');
 }

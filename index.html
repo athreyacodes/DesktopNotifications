@@ -15,12 +15,17 @@
     <div class="container-fluid mt-4">
         <div class="row">
             <div class="col">
-                <button type="button" class="btn btn-primary" onclick="Notify()">Show Notification</button>
+                <button type="button" class="btn btn-primary" onclick="Notify()">Show Desktop Notification</button>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <button type="button" class="btn btn-light" onclick="askForPermission(RenderDesktopNotificationPopup)">Ask for permission</button>
             </div>
         </div>
     </div>
 
-    <div id="warningToast" class="toast align-items-center text-white bg-warning border-0 position-absolute bottom-0 end-0 m-5" role="alert"
+    <div id="warningToast" class="toast align-items-center text-white bg-danger border-0 position-absolute bottom-0 end-0 m-5" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body" id="warningMsg">
