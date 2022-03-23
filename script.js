@@ -24,7 +24,7 @@ function DebounceNotifyDesktop() {
         RenderDesktopNotificationPopup();
     }
     else if (Notification.permission !== "denied") {
-        askForPermission(RenderDesktopNotificationPopup);
+        askForPermission();
     }
     else if (Notification.permission === "denied") {
         SetCurrentPermissionStatus("Permission Denied!");
