@@ -17,8 +17,15 @@
             <h1>Desktop Notifications</h1>
             <p class="lead">Asks for permission. If permission is granted/denied, it can be only changed again in
                 browser settings. we can not revoke from Code.</p>
-            <button type="button" class="btn btn-primary" onclick="Notify()">Show Desktop Notification</button>
+            <button type="button" class="btn btn-primary" onclick="NotifyDesktop()">Show Desktop Notification</button>
+
+            <p class="lead mt-3">If the tab is active, show toast message. If the tab is not active, show desktop
+                notification. For Testing purpose, 5 second delay is added after the click</p>
             <div id="currentStatus"></div>
+            <button type="button" class="btn btn-primary" onclick="Notify()">Notify User</button>
+
+
+            <div id="currentStatus" class="mt-3"></div>
         </div>
     </main>
 

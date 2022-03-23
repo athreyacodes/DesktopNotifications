@@ -1,15 +1,30 @@
 SetCurrentPermissionStatus("Permission status: Default. Ask for permission");
 
-function Notify() {
+
+const Notify = debounce(() => DebounceNotify());
+const NotifyDesktop = debounce(() => DebounceNotifyDesktop());
+
+function DebounceNotify() {
+    setTimeout(() => {
+        if(document.hasFocus()) {
+            var id = Math.floor(Math.random() * 101);
+            showSuccessToast('Workitem: '+ id +' has been assigned to by your lead');
+        } else {
+            NotifyDesktop();
+        }
+    }, 5000);
+}
+
+function DebounceNotifyDesktop() {
     if (!("Notification" in window)) {
         showWarningToast("This browser does not support desktop notification");
     }
     else if (Notification.permission === "granted") {
         SetCurrentPermissionStatus("Permission Granted!");
-        NotifyDesktop();
+        RenderDesktopNotificationPopup();
     }
     else if (Notification.permission !== "denied") {
-        askForPermission(NotifyDesktop);
+        askForPermission(RenderDesktopNotificationPopup);
     }
     else if (Notification.permission === "denied") {
         SetCurrentPermissionStatus("Permission Denied!");
@@ -17,7 +32,7 @@ function Notify() {
     }
 }
 
-const NotifyDesktop = debounce(() => RenderDesktopNotificationPopup());
+
 
 function RenderDesktopNotificationPopup() {
     var id = Math.floor(Math.random() * 101);
