@@ -1,5 +1,16 @@
-SetCurrentPermissionStatus("Permission status: Default. Ask for permission");
-askForPermission();
+var BrowserSettings = {
+    Chrome: "For Chrome, You can change permissions in Settings > Privacy and security > Site Settings > Notifications",
+    "Microsoft Edge": "For Microsoft Edge, You can change permissions in Cookies and site notifications > All permissions > Notifications",
+    Firefox: "For Firefox, You can change permissions in Settings > Privacy & Security > Permissions > Notifications"
+}
+
+window.addEventListener('load', function() {
+    SetMessage("Permission status: Default. Ask for permission", "currentStatus");
+    SetMessage(BrowserSettings[GetBrowser()] || "", "BrowserSetting");
+    askForPermission();
+});
+
+
 
 const Notify = debounce(() => DebounceNotify());
 const NotifyDesktop = debounce(() => DebounceNotifyDesktop());
@@ -12,7 +23,7 @@ function DebounceNotify() {
         } else {
             NotifyDesktop();
         }
-    }, 5000);
+    }, 3000);
 }
 
 function DebounceNotifyDesktop() {
@@ -20,14 +31,14 @@ function DebounceNotifyDesktop() {
         showWarningToast("This browser does not support desktop notification");
     }
     else if (Notification.permission === "granted") {
-        SetCurrentPermissionStatus("Permission Granted!");
+        SetMessage("Permission Granted!", "currentStatus");
         RenderDesktopNotificationPopup();
     }
     else if (Notification.permission !== "denied") {
         askForPermission();
     }
     else if (Notification.permission === "denied") {
-        SetCurrentPermissionStatus("Permission Denied!");
+        SetMessage("Permission Denied!", "currentStatus");
         showUserDeniedToast();
     }
 }
@@ -68,23 +79,23 @@ function askForPermission(successCB, failureCB) {
                     failureCB();
                 }
             } else if (permission === "default") {
-                SetCurrentPermissionStatus("Permission status: Default. Ask for permission");
+                SetMessage("Permission status: Default. Ask for permission", "currentStatus");
             }
         });
     }
 }
 
-function SetCurrentPermissionStatus(msg) {
-    document.getElementById('currentStatus').innerHTML = msg;
+function SetMessage(msg, id) {
+    document.getElementById(id).innerHTML = msg;
 }
 
 function showUserDeniedToast() {
-    SetCurrentPermissionStatus("Permission Denied!");
+    SetMessage("Permission Denied!", "currentStatus");
     showWarningToast('User has denied the permission for desktop notifications.');
 }
 
 function showUserAcceptedToast() {
-    SetCurrentPermissionStatus("Permission Granted!");
+    SetMessage("Permission Granted!", "currentStatus");
     showSuccessToast('User has accepted the permission for desktop notifications.');
 }
 
@@ -111,4 +122,24 @@ function debounce(func, timeout = 1000){
       clearTimeout(timer);
       timer = setTimeout(() => { func.apply(this, args); }, timeout);
     };
+  }
+
+  function IsChrome() {
+    return GetBrowser() === 'Chrome';
+  }
+
+  function IsFirefox() {
+    return GetBrowser() === 'Firefox';
+  }
+
+  function IsEdge() {
+    return GetBrowser() === 'Microsoft Edge';
+  }
+
+  function GetBrowser() {
+    return bowser &&
+    bowser.getParser(window.navigator.userAgent) &&
+    bowser.getParser(window.navigator.userAgent).parsedResult &&
+    bowser.getParser(window.navigator.userAgent).parsedResult.browser &&
+    bowser.getParser(window.navigator.userAgent).parsedResult.browser.name;
   }
